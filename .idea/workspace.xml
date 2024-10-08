@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1c569b9-bda5-40f0-80c1-430da9693b1d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/C950_delivery.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="c1c569b9-bda5-40f0-80c1-430da9693b1d" name="Changes" comment="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files">
+      <change afterPath="$PROJECT_DIR$/package.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/truck.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "JBTennis"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/JBTennis/WGUPS-delivery.git",
+    "accountId": "d60916f7-79e9-43af-b1c8-4a969bb026bd"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 1
 }]]></component>
@@ -61,6 +70,19 @@
       <option name="presentableId" value="Default" />
       <updated>1728323074279</updated>
     </task>
+    <task id="LOCAL-00001" summary="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files">
+      <option name="closed" value="true" />
+      <created>1728327952759</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728327952759</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files" />
   </component>
 </project>

@@ -1,20 +1,24 @@
 #011540261
+from datetime import timedelta
+from package import Package
+from truck import Truck
 
-#Package class with all info
-class Package:
-    def __init__(self, id_num: int, address: str, deadline: str, city: str, zip: str, weight: float, status: str):
-        self.id = id_num
-        self.address = address
-        self.deadline = deadline
-        self.city = city
-        self.zip = zip
-        self.weight = weight
-        self.status = status
+#Start of global variables
+location = []
+with open("distanceCSV.csv") as distance:
 
-class Truck:
-    def __init__(self, location, packages):
-        self.current_location = location
-        self.packages = packages
+    for line in distance:
+        line = line.split(',')
+        line[26] = line[26].strip()
+        location.append(line)
+
+addys = []
+with open("addressCSV.csv") as _:
+    for line in _:
+        line = line.split(',')
+        line[-1] = line[-1].strip()
+        addys.append(line)
+#end of global variables
 
 
 
@@ -22,7 +26,7 @@ class Truck:
 class ChainingHashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=10):
+    def __init__(self, initial_capacity=50):
         # initialize the hash table with empty bucket list entries.
         self.table = []
         for i in range(initial_capacity):
@@ -72,3 +76,39 @@ class ChainingHashTable:
             # print (key_value)
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
+
+
+def distanceBetween(addy1, addy2):
+    for i in range(len(addys)):
+        if addy1 == addys[i][2]:
+            first = int(addys[i][0])
+        elif addy2 == addys[i][2]:
+            second = int(addys[i][0])
+
+
+
+    return location[max(first, second)] [min(first, second)]
+
+
+if __name__ == "__main__":
+    package_data = [Package() for i in range(0, 40)]
+    hash_tab = ChainingHashTable()
+    i = 0
+    with open("packageCSV.csv") as pack:
+        for line in pack:
+            line = line.split(',')
+            line[-1] = line[-1].strip()
+            package_data[i].insert(int(line[0]), line[1], line[5], line[2], line[4], int(line[6]))
+            i += 1
+    for i in package_data:
+        hash_tab.insert(i.id, i.get_data()[1:])
+
+    print(hash_tab.table)
+    print(location[1][0])
+    print(addys)
+    print(distanceBetween(package_data[5].address, package_data[15].address))
+
+
+
+
+
