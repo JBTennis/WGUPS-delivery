@@ -1,5 +1,4 @@
 #011540261
-from datetime import timedelta
 from package import Package
 from truck import Truck
 
@@ -77,7 +76,7 @@ class ChainingHashTable:
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
 
-
+"""
 def distanceBetween(addy1, addy2):
     for i in range(len(addys)):
         if addy1 == addys[i][2]:
@@ -87,28 +86,33 @@ def distanceBetween(addy1, addy2):
 
 
 
-    return location[max(first, second)] [min(first, second)]
+    return location[max(first, second)] [min(first, second)]"""
 
 
 if __name__ == "__main__":
-    package_data = [Package() for i in range(0, 40)]
+    packs = [Package() for i in range(0, 40)]
     hash_tab = ChainingHashTable()
     i = 0
     with open("packageCSV.csv") as pack:
         for line in pack:
             line = line.split(',')
             line[-1] = line[-1].strip()
-            package_data[i].insert(int(line[0]), line[1], line[5], line[2], line[4], int(line[6]))
+            packs[i].insert(int(line[0]), line[1], line[5], line[2], line[4], int(line[6]))
             i += 1
-    for i in package_data:
-        hash_tab.insert(i.id, i.get_data()[1:])
+    for i in packs:
+        hash_tab.insert(i.id, i.get_data()[0:])
 
-    print(hash_tab.table)
-    print(location[1][0])
-    print(addys)
-    print(distanceBetween(package_data[5].address, package_data[15].address))
+    truck1 = Truck()
+    print(truck1.current_time)
+    truck1_list = [packs[1],packs[2], packs[3], packs[4]]
+    for package in truck1_list:
+        truck1.add_packages(package)
+    print(packs[1].status)
+    truck1.deliver()
+    print(truck1.current_time)
 
-
+    for pack in packs:
+        print(pack.get_data())
 
 
 

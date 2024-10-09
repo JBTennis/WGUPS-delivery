@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1c569b9-bda5-40f0-80c1-430da9693b1d" name="Changes" comment="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files">
-      <change afterPath="$PROJECT_DIR$/package.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/truck.py" afterDir="false" />
+    <list default="true" id="c1c569b9-bda5-40f0-80c1-430da9693b1d" name="Changes" comment="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truck.py" beforeDir="false" afterPath="$PROJECT_DIR$/truck.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,21 +24,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JBTennis"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JBTennis&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JBTennis/WGUPS-delivery.git",
-    "accountId": "d60916f7-79e9-43af-b1c8-4a969bb026bd"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JBTennis/WGUPS-delivery.git&quot;,
+    &quot;accountId&quot;: &quot;d60916f7-79e9-43af-b1c8-4a969bb026bd&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2n7TNLyOvSxLUWW0kbAKVRFePor" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -49,6 +48,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.main.executor": "Run",
+    "Python.truck.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "settings.editor.selected.configurable": "preferences.lookFeel"
@@ -78,11 +78,28 @@
       <option name="project" value="LOCAL" />
       <updated>1728327952759</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor">
+      <option name="closed" value="true" />
+      <created>1728409216939</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728409216939</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor">
+      <option name="closed" value="true" />
+      <created>1728409278631</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728409278631</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files" />
+    <MESSAGE value="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor" />
   </component>
 </project>
