@@ -97,19 +97,23 @@ if __name__ == "__main__":
         for line in pack:
             line = line.split(',')
             line[-1] = line[-1].strip()
-            packs[i].insert(int(line[0]), line[1], line[5], line[2], line[4], int(line[6]))
+            packs[i].insert(int(line[0]), line[1], line[5], line[2], line[4], int(line[6]), line[-1])
             i += 1
     for i in packs:
         hash_tab.insert(i.id, i.get_data()[0:])
 
     truck1 = Truck()
+    truck2 = Truck()
+    truck3 = Truck()
     print(truck1.current_time)
-    truck1_list = [packs[1],packs[2], packs[3], packs[4]]
+    truck2_list = [packs[36], packs[37], packs[35], packs[2], packs[17], packs[6]]
+    truck1_list = [packs[0], packs[1],packs[2], packs[3], packs[4], packs[7], packs[8], packs[9], packs[11], packs[12], packs[13], packs[14], packs[15], packs[16]]
     for package in truck1_list:
         truck1.add_packages(package)
     print(packs[1].status)
     truck1.deliver()
     print(truck1.current_time)
+    print(truck1.mileage)
 
     for pack in packs:
         print(pack.get_data())

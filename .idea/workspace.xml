@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1c569b9-bda5-40f0-80c1-430da9693b1d" name="Changes" comment="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor">
+    <list default="true" id="c1c569b9-bda5-40f0-80c1-430da9693b1d" name="Changes" comment="Fixed the truck delivery function so that it actually delivers + adds time and mileage for every stop">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/truck.py" beforeDir="false" afterPath="$PROJECT_DIR$/truck.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.py" beforeDir="false" afterPath="$PROJECT_DIR$/package.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,12 +94,21 @@
       <option name="project" value="LOCAL" />
       <updated>1728409278631</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed the truck delivery function so that it actually delivers + adds time and mileage for every stop">
+      <option name="closed" value="true" />
+      <created>1728498327798</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728498327799</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created Hash Table, as well as Package class and Truck class, and added address, distance, and package csv files" />
     <MESSAGE value="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved package and truck class to their own seperate file and added a find distance function to assist in the trucks finding the nearest neighbor" />
+    <MESSAGE value="Fixed the truck delivery function so that it actually delivers + adds time and mileage for every stop" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed the truck delivery function so that it actually delivers + adds time and mileage for every stop" />
   </component>
 </project>
