@@ -21,6 +21,10 @@ with open("addressCSV.csv") as _:
         addys.append(line)
 #end of global variables
 
+def load_truck(truck, list):
+    for pack in list:
+        truck.add_packages(pack)
+
 
 def deliver(truck):
     #Once they're out for delivery it changes the status of the packages to 'en route'
@@ -82,15 +86,19 @@ def distanceBetween(addy1, addy2):
     return float(location[max(first, second)] [min(first, second)])
 
 def lookUp(time, id):
-    if time > hash_tab.search(id)[-1]:
-        return f'package delivered at {hash_tab.search(id)[-1]}'
-    elif time > hash_tab.search(id)[-2]:
+    hour, minute = time.split(':')
+    time = timedelta(hours=int(hour), minutes=int(minute))
+    if time > hash_tab.search(id).delivery_time:
+        return f'package delivered at {hash_tab.search(id).delivery_time}'
+    elif time > hash_tab.search(id).pick_up_time:
         return f'package en route'
     else:
         return f'package at delivery hub'
 
 
 if __name__ == "__main__":
+    #what_time = input("What time are you looking for? (Please add your time in HH:MM format)")
+    #what_pack = int(input("What was your package id number?"))
     packs = [Package() for i in range(0, 40)]
     hash_tab = ChainingHashTable()
     i = 0
@@ -104,20 +112,30 @@ if __name__ == "__main__":
         hash_tab.insert(i.id, i)
 
 
-    truck1 = Truck(hash_tab)
-    truck2 = Truck(hash_tab)
-    truck3 = Truck(hash_tab)
+    truck1 = Truck(hash_tab, 8)
+    truck2 = Truck(hash_tab, 9, 5)
+    truck3 = Truck(hash_tab, 10, 20)
 
-    truck2_list = [packs[36], packs[37], packs[35], packs[2], packs[17], packs[6]]
-    truck1_list = [packs[0], packs[1],packs[2], packs[3], packs[4], packs[7], packs[8], packs[9], packs[11], packs[12], packs[13], packs[14], packs[15], packs[16]]
-    for package in truck1_list:
-        truck1.add_packages(package)
+    list1 = [packs[0], packs[12], packs[13], packs[14], packs[15], packs[19], packs[35], packs[36], packs[29], packs[28], packs[33], packs[20], packs[39]]
+    list2 = [packs[2], packs[5], packs[17], packs[24], packs[25], packs[27], packs[30], packs[31], packs[35]]
+    #list3 = [packs[1], packs[3], packs[4], packs[5], packs[6], packs[7], packs[8], packs[9], packs[10], packs[24], packs[27], packs[31], packs[32]]
+
+    load_truck(truck1, list1)
+    load_truck(truck2, list2)
+    #load_truck(truck3, list3)
+
     deliver(truck2)
     deliver(truck1)
+    deliver(truck3)
+    #print({truck1.mileage + truck2.mileage + truck3.mileage})
 
-    print(hash_tab.search(1))
-    """print(truck1.current_time)
-    print(packs[1].status)
-    print(truck1.mileage)"""
+
+    #print(lookUp(what_time, what_pack))
+
+    for key in hash_tab.table:
+        if len(key) > 0:
+            print(key[0][1])
+
+    print(truck1.current_time, truck1.mileage)
 
 
