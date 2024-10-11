@@ -1,6 +1,8 @@
 #011540261
+from datetime import timedelta
 from package import Package
 from truck import Truck
+from hash import ChainingHashTable
 
 #Start of global variables
 location = []
@@ -20,73 +22,72 @@ with open("addressCSV.csv") as _:
 #end of global variables
 
 
+def deliver(truck):
+    #Once they're out for delivery it changes the status of the packages to 'en route'
+    for i in range(0, len(truck.packages)):
+        truck.packages[i].status = 'en route'
+        truck.packages[i].pick_up_time = truck.current_time
+    deli_index = -1
 
-# HashTable class using chaining.
-class ChainingHashTable:
-    # Constructor with optional initial capacity parameter.
-    # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=50):
-        # initialize the hash table with empty bucket list entries.
-        self.table = []
-        for i in range(initial_capacity):
-            self.table.append([])
+    #Start of nearest neighbor algorithm, it has a time complexity of O(N^2) this while loop
+    #is the outer loop that goes until we are out of packages
+    while len(truck.packages) >= -1:
+        nearest = 10000000
 
-    # Inserts a new item into the hash table.
-    def insert(self, key, item):  # does both insert and update
-        # get the bucket list where this item will go.
-        bucket = hash(key) % len(self.table)
-        bucket_list = self.table[bucket]
+        # This is the inner loop that does most of the heavy lifting by seeing which next address
+        # is the closest
+        for i in range(0, len(truck.packages)):
+            if nearest > distanceBetween(truck.current_location, truck.packages[i].address):
+                nearest = distanceBetween(truck.current_location, truck.packages[i].address)
+                deli_index = i
 
-        # update key if it is already in the bucket
-        for kv in bucket_list:
-            # print (key_value)
-            if kv[0] == key:
-                kv[1] = item
-                return True
+        #Once we've gone through the whole list we want to return to the hub
+        if len(truck.packages) < 1:
+            nearest = distanceBetween('4001 South 700 East', truck.current_location)
+            deli_index = None
 
-        # if not, insert the item to the end of the bucket list.
-        key_value = [key, item]
-        bucket_list.append(key_value)
-        return True
+        #This updates our mileage ticker and our time ticker for every address visited
+        truck.current_time += timedelta(hours=nearest / truck.speed)
+        truck.mileage += nearest
 
-    # Searches for an item with matching key in the hash table.
-    # Returns the item if found, or None if not found.
-    def search(self, key):
-        # get the bucket list where this key would be.
-        bucket = hash(key) % len(self.table)
-        bucket_list = self.table[bucket]
-        # print(bucket_list)
+        #This returns us to the hub, I've already added the time and mileage above
+        if len(truck.packages) < 1:
+            truck.current_location = '4001 South 700 East'
+            input("All deliveries made and truck returning to hub")
+            return
 
-        # search for the key in the bucket list
-        for kv in bucket_list:
-            # print (key_value)
-            if kv[0] == key:
-                return kv[1]  # value
-        return None
+        elif len(truck.packages) > 0:
+            truck.packages[deli_index].status = "Delivered"
+            truck.packages[deli_index].delivery_time = truck.current_time
+            truck.current_location = truck.packages[deli_index].address
+            truck.packages.remove(truck.packages[deli_index])
 
-    # Removes an item with matching key from the hash table.
-    def remove(self, key):
-        # get the bucket list where this item will be removed from.
-        bucket = hash(key) % len(self.table)
-        bucket_list = self.table[bucket]
-
-        # remove the item from the bucket list if it is present.
-        for kv in bucket_list:
-            # print (key_value)
-            if kv[0] == key:
-                bucket_list.remove([kv[0], kv[1]])
-
-"""
+#This function finds the actual distance of the two based of the distanceCSV file
 def distanceBetween(addy1, addy2):
-    for i in range(len(addys)):
-        if addy1 == addys[i][2]:
-            first = int(addys[i][0])
-        elif addy2 == addys[i][2]:
-            second = int(addys[i][0])
+    first = -1
+    second = -1
+    try:
+        for i in range(len(addys)):
+            if addy1 == addys[i][2]:
+                first = int(addys[i][0])
+            if addy2 == addys[i][2]:
+                second = int(addys[i][0])
+    except IndexError:
+        print("One or more address not in database")
+        return 0
 
 
+    #Because the CSV file doesn't go all the way up for a lot of the indexes the bigger number
+    #Should always be the left number otherwise we wouldn't get a return
+    return float(location[max(first, second)] [min(first, second)])
 
-    return location[max(first, second)] [min(first, second)]"""
+def lookUp(time, id):
+    if time > hash_tab.search(id)[-1]:
+        return f'package delivered at {hash_tab.search(id)[-1]}'
+    elif time > hash_tab.search(id)[-2]:
+        return f'package en route'
+    else:
+        return f'package at delivery hub'
 
 
 if __name__ == "__main__":
@@ -100,23 +101,23 @@ if __name__ == "__main__":
             packs[i].insert(int(line[0]), line[1], line[5], line[2], line[4], int(line[6]), line[-1])
             i += 1
     for i in packs:
-        hash_tab.insert(i.id, i.get_data()[0:])
+        hash_tab.insert(i.id, i)
 
-    truck1 = Truck()
-    truck2 = Truck()
-    truck3 = Truck()
-    print(truck1.current_time)
+
+    truck1 = Truck(hash_tab)
+    truck2 = Truck(hash_tab)
+    truck3 = Truck(hash_tab)
+
     truck2_list = [packs[36], packs[37], packs[35], packs[2], packs[17], packs[6]]
     truck1_list = [packs[0], packs[1],packs[2], packs[3], packs[4], packs[7], packs[8], packs[9], packs[11], packs[12], packs[13], packs[14], packs[15], packs[16]]
     for package in truck1_list:
         truck1.add_packages(package)
+    deliver(truck2)
+    deliver(truck1)
+
+    print(hash_tab.search(1))
+    """print(truck1.current_time)
     print(packs[1].status)
-    truck1.deliver()
-    print(truck1.current_time)
-    print(truck1.mileage)
-
-    for pack in packs:
-        print(pack.get_data())
-
+    print(truck1.mileage)"""
 
 

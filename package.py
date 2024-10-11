@@ -9,6 +9,8 @@ class Package:
         self.weight = None
         self.status = None
         self.info = None
+        self.pick_up_time = None
+        self.delivery_time = None
 
     def insert(self, id_num: int, address: str, deadline: str, city: str, zipcode: str, weight: float, extra_info, status: str= "at the hub"):
         self.id = id_num
@@ -20,5 +22,11 @@ class Package:
         self.status = status
         self.info = extra_info
 
-    def get_data(self):
-        return [self.id, self.address, self.deadline, self.city, self.zip, self.weight, self.info, self.status]
+
+
+    def __str__(self):
+        return f'{self.id}, {self.address}, {self.status}, {self.pick_up_time}, {self.delivery_time}'
+
+    """def update(self, hash_table, new_status):
+        hash_table.update(self.id, new_status)
+        self.status = new_status"""
