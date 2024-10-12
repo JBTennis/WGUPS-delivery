@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 class Truck:
-#Added addresses and distances so they can be used to find distance between later
 
     def __init__(self, hash_table, hours=8, minutes=0,):
         self.current_location = '4001 South 700 East'

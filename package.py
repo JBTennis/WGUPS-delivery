@@ -25,8 +25,4 @@ class Package:
 
 
     def __str__(self):
-        return f'{self.id}, {self.address}, {self.deadline}, {self.status}, {self.pick_up_time}, {self.delivery_time}'
-
-    """def update(self, hash_table, new_status):
-        hash_table.update(self.id, new_status)
-        self.status = new_status"""
+        return f'Package ID: {self.id}, Address: {self.address}, Deadline: {self.deadline}, Status: {self.status}, Picked Up: {self.pick_up_time}, Delivered: {self.delivery_time}'

@@ -1,4 +1,7 @@
 # HashTable class using chaining.
+
+#I borrowed this from the WGU C950 Hashing webinar. Thank you Dr. Tepe!
+#https://srm--c.vf.force.com/apex/coursearticle?Id=kA03x000000e1fuCAA
 class ChainingHashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.
