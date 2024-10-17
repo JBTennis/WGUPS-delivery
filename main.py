@@ -21,32 +21,43 @@ with open("addressCSV.csv") as _:
         addys.append(line)
 #end of global variables
 
+def get_time(time_str):
+    hour, minute = time_str.split(':')
+    user_time = timedelta(hours=int(hour), minutes=int(minute))
+    return user_time
+
 #This runs first and adds packages to truck objects
 def load_truck(truck, lists):
     for pack in lists:
         truck.add_packages(pack)
+        pack.truck = truck.truck_no
 
 
 #Delivers packages and removes them from truck object while updating package status
-def deliver(truck):
+def deliver(truck, user_time=timedelta(hours=17)):
     #Once they're out for delivery it changes the status of the packages to 'en route'
     for i in range(0, len(truck.packages)):
         truck.packages[i].status = 'en route'
         truck.packages[i].pick_up_time = truck.current_time
     deli_index = -1
-
     #Start of nearest neighbor algorithm, it has a time complexity of O(N^2), this while loop
     #is the outer loop that goes until we are out of packages
     while len(truck.packages) >= -1:
         nearest = 10000000
-
-        # This is the inner loop that does most of the heavy lifting by seeing which next address
-        # is the closest of all packages left in truck
+        #Updates package 9's address after 10:20
+        if user_time < timedelta(hours=10, minutes=20):
+            truck.hash_table.search(9).address = "300 State St"
+            truck.hash_table.search(9).zip = "84103"
+        else:
+            truck.hash_table.search(9).address = "410 S State St"
+            truck.hash_table.search(9).zip = "84111"
+        if user_time < truck.current_time:
+            return
+        # This is the inner loop that does most of the heavy lifting by seeing which next address is the closest of all packages left in truck
         for i in range(0, len(truck.packages)):
             if nearest > distanceBetween(truck.current_location, truck.packages[i].address):
                 nearest = distanceBetween(truck.current_location, truck.packages[i].address)
                 deli_index = i
-
         #Once we've gone through the whole list we want to return to the hub
         if len(truck.packages) < 1:
             nearest = distanceBetween('4001 South 700 East', truck.current_location)
@@ -54,7 +65,6 @@ def deliver(truck):
         #This updates our mileage ticker and our time ticker for every address visited
         truck.current_time += timedelta(hours=nearest / truck.speed)
         truck.mileage += nearest
-
         #This returns us to the hub, I've already added the time and mileage above
         if len(truck.packages) < 1:
             truck.current_location = '4001 South 700 East'
@@ -86,23 +96,18 @@ def distanceBetween(addy1, addy2):
 #This take the id of a package and a desired time and compares to the delivery and pick up time
 #and returns the appropriate descriptor of where the package is
 def lookUp(time, id):
-    try:
-        hour, minute = time.split(':')
-        time = timedelta(hours=int(hour), minutes=int(minute))
-        if time > hash_tab.search(id).delivery_time:
-            return (f'Package ID: {id}, Address: {hash_tab.search(id).address}, Deadline: {hash_tab.search(id).deadline},'
-                    f' City: {hash_tab.search(id).city}, Zipcode: {hash_tab.search(id).zip}, Weight: {hash_tab.search(id).weight} lbs,'
-                    f' package delivered at: {hash_tab.search(id).delivery_time}')
-        elif time > hash_tab.search(id).pick_up_time:
-            return (f'Package ID: {id}, Address: {hash_tab.search(id).address}, Deadline: {hash_tab.search(id).deadline},'
-                    f' City: {hash_tab.search(id).city}, Zipcode: {hash_tab.search(id).zip}, Weight: {hash_tab.search(id).weight} lbs,'
-                    f' package en route')
-        else:
-            return (f'Package ID: {id}, Address: {hash_tab.search(id).address}, Deadline: {hash_tab.search(id).deadline},'
-                    f' City: {hash_tab.search(id).city}, Zipcode: {hash_tab.search(id).zip}, Weight: {hash_tab.search(id).weight} lbs,'
-                    f' package at delivery hub')
-    except ValueError:
-        return "It appears your value is invalid please try again!"
+    if time > hash_tab.search(id).delivery_time:
+        return (f'Package ID: {id}, Address: {hash_tab.search(id).address}, Deadline: {hash_tab.search(id).deadline},'
+                f' City: {hash_tab.search(id).city}, Zipcode: {hash_tab.search(id).zip}, Weight: {hash_tab.search(id).weight} lbs,'
+                f' Truck {hash_tab.search(id).truck} delivered package at: {hash_tab.search(id).delivery_time}')
+    elif time > hash_tab.search(id).pick_up_time:
+        return (f'Package ID: {id}, Address: {hash_tab.search(id).address}, Deadline: {hash_tab.search(id).deadline},'
+                f' City: {hash_tab.search(id).city}, Zipcode: {hash_tab.search(id).zip}, Weight: {hash_tab.search(id).weight} lbs,'
+                f' package on Truck {hash_tab.search(id).truck} and en route')
+    else:
+        return (f'Package ID: {id}, Address: {hash_tab.search(id).address}, Deadline: {hash_tab.search(id).deadline},'
+                f' City: {hash_tab.search(id).city}, Zipcode: {hash_tab.search(id).zip}, Weight: {hash_tab.search(id).weight} lbs,'
+                f' package at delivery hub')
 
 
 if __name__ == "__main__":
@@ -124,9 +129,9 @@ if __name__ == "__main__":
         hash_tab.insert(i.id, i)
 
     #Creating 3 truck objects that leave at different times to accommodate different times packages need to leave or arrive
-    truck1 = Truck(hash_tab, 8)
-    truck2 = Truck(hash_tab, 9, 5)
-    truck3 = Truck(hash_tab, 10, 20)
+    truck1 = Truck(1, hash_tab, 8)
+    truck2 = Truck(2, hash_tab, 9, 5)
+    truck3 = Truck(3, hash_tab, 10, 20)
 
 
     #manually inserted packages into trucks
@@ -139,7 +144,7 @@ if __name__ == "__main__":
     load_truck(truck2, list2)
     load_truck(truck3, list3)
 
-    #changes package statuses to en route, then changes status to deliver and removes from Truck
+    #changes package statuses to en route, then changes status to delivered and removes from Truck
     #and then updates time and mileage for the truck
     deliver(truck2)
     deliver(truck1)
@@ -148,7 +153,9 @@ if __name__ == "__main__":
 
     #command line tool to make lookups easier
     while True:
+        print("-------------------------------------------------")
         print("Welcome, please enter number for what you'd like!")
+        print("-------------------------------------------------")
         print("1: Print all packages' delivery information and total mileage of trucks.")
         print("2: Print all information of a single package for a given time.")
         print("3: Print all information for all packages at a given time.")
@@ -159,25 +166,42 @@ if __name__ == "__main__":
             print("User input invalid please enter 1, 2, 3 or 4")
             continue
         if user_in == 1:
+            deliver(truck2)
+            deliver(truck1)
+            deliver(truck3)
             for i in range(len(hash_tab.table)):
                 if len(hash_tab.table[i]) > 0:
                     print(hash_tab.search(i))
-            print()
+            print("----------------------------")
             print("Total mileage of all trucks:")
             print(truck1.mileage + truck2.mileage + truck3.mileage)
-            print()
         elif user_in == 2:
-            TIME = input("What time? (Please add time in HH:MM format)")
+            print("-------------------------------------------------")
+            time_str = input("What time? (Please add time in HH:MM format)")
+            print("-------------------------------------------------")
             ID = int(input("What is the package id number?"))
+            print("-----------------------------------------")
+            TIME = get_time(time_str)
+            deliver(truck2, TIME)
+            deliver(truck1, TIME)
+            deliver(truck3, TIME)
             print(lookUp(TIME, ID))
             print()
         elif user_in == 3:
-            TIME = input("What time? (Please add time in HH:MM format)")
+            print("-------------------------------------------------")
+            time_str = input("What time? (Please add time in HH:MM format)")
+            print("-------------------------------------------------")
+            TIME = get_time(time_str)
+            deliver(truck2, TIME)
+            deliver(truck1, TIME)
+            deliver(truck3, TIME)
             for i in range(1, 41):
                 print(lookUp(TIME, i))
             print()
         elif user_in == 4:
+            print("--------------------------")
             print("Thank you for using WGUPS!")
+            print("--------------------------")
             break
         else:
             print("User input invalid please enter 1, 2, 3 or 4")

@@ -2,13 +2,14 @@ from datetime import timedelta
 
 class Truck:
 
-    def __init__(self, hash_table, hours=8, minutes=0,):
+    def __init__(self, truck_no, hash_table, hours=8, minutes=0,):
         self.current_location = '4001 South 700 East'
         self.packages = []
         self.mileage = 0.0
         self.current_time = timedelta(0, 0, 0, 0, minutes, hours, 0)
         self.speed = 18
         self.hash_table = hash_table
+        self.truck_no = truck_no
 
 
     def add_packages(self, package):

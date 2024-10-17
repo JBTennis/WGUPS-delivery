@@ -11,6 +11,7 @@ class Package:
         self.info = None
         self.pick_up_time = None
         self.delivery_time = None
+        self.truck = None
 
     def insert(self, id_num: int, address: str, deadline: str, city: str, zipcode: str, weight: float, extra_info, status: str= "at the hub"):
         self.id = id_num
@@ -25,4 +26,4 @@ class Package:
 
 
     def __str__(self):
-        return f'Package ID: {self.id}, Address: {self.address}, Deadline: {self.deadline}, Status: {self.status}, Picked Up: {self.pick_up_time}, Delivered: {self.delivery_time}'
+        return f'Package ID: {self.id}, Address: {self.address}, Deadline: {self.deadline}, Status: {self.status}, Picked Up: {self.pick_up_time}, Delivered: {self.delivery_time}, Truck ID: {self.truck}'
